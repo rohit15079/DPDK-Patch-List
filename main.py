@@ -1,6 +1,6 @@
 from fetchData import fetchPatchList
-from urls import *
+from tableColumnIndex import *
+from filterDelegates import filterDelegate
 
-patchList, patchListHyperlinks=fetchPatchList()
+patchList=fetchPatchList()
 print(patchList)
-print(patchListHyperlinks)
