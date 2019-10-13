@@ -11,22 +11,25 @@ def fetchPatchList():
 
     while nextPageExists:
         currentPage=currentPage+1
+        print("Fetching Page "+str(currentPage)+"..........")
         pageDataRaw=requests.get(webUrl+patchListUrl+pageUrl+str(currentPage))
+        print("Processing Page "+str(currentPage)+"..........")
         pageData=BeautifulSoup(pageDataRaw.text, "html.parser")
         table=pageData.find("table")
 
         if currentPage==1:
             tableHead=table.find("thead").find("tr").find_all("th")
             patchListHead=[]
+            patchListHeadData=[]
             patchListHyperlinksHead=[]
 
             for element in tableHead:
-                hyperlink=element.find('a')
                 patchListHyperlinksHead.append('')
-                patchListHead.append(element.text.strip())
+                patchListHeadData.append(element.text.strip())
 
+            patchListHead.append(patchListHeadData)
+            patchListHead.append(patchListHyperlinksHead)
             patchList.append(patchListHead)
-            patchListHyperlinks.append(patchListHyperlinksHead)
 
         tableBody=table.find("tbody")
         tableRows=tableBody.find_all("tr")
@@ -34,6 +37,7 @@ def fetchPatchList():
         for row in tableRows:
             rowData = row.find_all("td")
             patchListRowEntry=[]
+            patchListRowEntryData=[]
             patchListHyperlinksRowEntry=[]
 
             for element in rowData:
@@ -45,12 +49,13 @@ def fetchPatchList():
                 else:
                     patchListHyperlinksRowEntry.append(webUrl+hyperlink.attrs["href"])
 
-                patchListRowEntry.append(element.text.strip())
+                patchListRowEntryData.append(element.text.strip())
 
+            patchListRowEntry.append(patchListRowEntryData)
+            patchListRowEntry.append(patchListHyperlinksRowEntry)
             patchList.append(patchListRowEntry)
-            patchListHyperlinks.append(patchListHyperlinksRowEntry)
 
         if str(pageData.find(attrs={"class":"next"}))=="None":
             nextPageExists=False
 
-    return patchList, patchListHyperlinks
+    return patchList
