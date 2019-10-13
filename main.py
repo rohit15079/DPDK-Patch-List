@@ -3,4 +3,6 @@ from tableColumnIndex import *
 from filterDelegates import filterDelegate
 
 patchList=fetchPatchList()
-print(patchList)
+mandatoryPatchList, optionalPatchList=filterDelegate(patchList)
+print(mandatoryPatchList)
+print(optionalPatchList)
