@@ -7,11 +7,15 @@ def filterDirectory(patchList):
     mandatoryPatchList=[]
     optionalPatchList=[]
     for patch in patchList:
+        patchNeeded=True
         for directory in optionalDirectoryList:
-            if directory in patch[dataIndex][patchIndex]:
-                print(patch[dataIndex][patchIndex])
-                print(directory)
-                optionalPatchList.append(patch)
-            else:
-                mandatoryPatchList.append(patch)
+            if directory in patch[dataIndex][patchIndex] or directory in patch[dataIndex][seriesIndex]:
+                patchNeeded=False
+                break
+        if patchNeeded:
+            mandatoryPatchList.append(patch)
+        else:
+            optionalPatchList.append(patch)
+            print(patch)
+
     return mandatoryPatchList, optionalPatchList
