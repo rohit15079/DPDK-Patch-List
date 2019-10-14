@@ -31,3 +31,4 @@ net/igb
 net/ifcvf
 net/hinic
 net/vmxnet3
+net/ice
