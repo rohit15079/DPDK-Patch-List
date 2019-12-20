@@ -33,3 +33,4 @@ net/hinic
 net/vmxnet3
 net/ice
 net/ionic
+net/netvsc
